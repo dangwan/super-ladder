@@ -8,7 +8,6 @@ import (
 	"net/url"
 	"strings"
 
-	"git.code.oa.com/trpc-go/trpc-go/log"
 	"github.com/dangwan/super-ladder/internal/log"
 	"github.com/pkg/errors"
 )
