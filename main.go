@@ -8,8 +8,9 @@ import (
 	"net/url"
 	"strings"
 
+	"git.code.oa.com/trpc-go/trpc-go/log"
+	"github.com/dangwan/super-ladder/internal/log"
 	"github.com/pkg/errors"
-	"github.com/siddontang/go/log"
 )
 
 func handleClientRequest(conn net.Conn) error {
@@ -17,7 +18,7 @@ func handleClientRequest(conn net.Conn) error {
 		return errors.Wrap(nil, "Client conn is nil")
 	}
 	defer conn.Close()
-	log.Debug()
+	log.Debug(conn.LocalAddr().String(), " is reqeusting")
 	var b [1024]byte
 	n, err := conn.Read(b[:])
 	if err != nil {
@@ -26,6 +27,7 @@ func handleClientRequest(conn net.Conn) error {
 	}
 	var method, host string
 	fmt.Sscanf(string(b[:bytes.IndexByte(b[:], '\n')]), "%s%s", &method, &host)
+	log.Debug("method:", method, "host:", host)
 	reqUrl, err := url.Parse(host)
 	if err != nil {
 		fmt.Println(err)
