@@ -55,7 +55,7 @@ func handleClientRequest(conn net.Conn) error {
 	return nil
 }
 func main() {
-	host := flag.String("host", "127.0.0.1", "Please input host address")
+	host := flag.String("host", "", "Please input host address")
 	port := flag.String("port", "8080", "Please input port")
 	flag.Parse()
 	listener, err := net.Listen("tcp", fmt.Sprintf("%s:%s", *host, *port))
