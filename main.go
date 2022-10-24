@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"flag"
 	"fmt"
 	"io"
 	"net"
@@ -54,11 +55,14 @@ func handleClientRequest(conn net.Conn) error {
 	return nil
 }
 func main() {
-	listener, err := net.Listen("tcp", ":8080")
+	host := flag.String("host", "127.0.0.1", "Please input host address")
+	port := flag.String("port", "8080", "Please input port")
+	flag.Parse()
+	listener, err := net.Listen("tcp", fmt.Sprintf("%s:%s", *host, *port))
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("Start listen 8080")
+	fmt.Println("Start listen " + fmt.Sprintf("%s:%s", *host, *port))
 	for {
 		client, err := listener.Accept()
 		if err != nil {
