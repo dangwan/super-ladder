@@ -32,6 +32,7 @@ func handleClientRequest(conn net.Conn) error {
 		fmt.Println(err)
 		return err
 	}
+	fmt.Println("%+v", reqUrl)
 	address := reqUrl.Host
 	if reqUrl.Opaque == "443" {
 		address = reqUrl.Scheme + ":443"
@@ -45,7 +46,7 @@ func handleClientRequest(conn net.Conn) error {
 		fmt.Println(err)
 		return err
 	}
-	if method == "connect" {
+	if method == "CONNECT" {
 		fmt.Fprint(conn, "http:/1.1 200 connection established\r\n")
 	} else {
 		svr.Write(b[:n])
