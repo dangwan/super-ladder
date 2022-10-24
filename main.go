@@ -8,7 +8,6 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/dangwan/super-ladder/internal/log"
 	"github.com/pkg/errors"
 )
 
@@ -17,7 +16,7 @@ func handleClientRequest(conn net.Conn) error {
 		return errors.Wrap(nil, "Client conn is nil")
 	}
 	defer conn.Close()
-	log.Debug(conn.LocalAddr().String(), " is reqeusting")
+	fmt.Println(conn.LocalAddr().String(), " is reqeusting")
 	var b [1024]byte
 	n, err := conn.Read(b[:])
 	if err != nil {
@@ -26,7 +25,7 @@ func handleClientRequest(conn net.Conn) error {
 	}
 	var method, host string
 	fmt.Sscanf(string(b[:bytes.IndexByte(b[:], '\n')]), "%s%s", &method, &host)
-	log.Debug("method:", method, "host:", host)
+	fmt.Println("method:", method, "host:", host)
 	reqUrl, err := url.Parse(host)
 	if err != nil {
 		fmt.Println(err)
