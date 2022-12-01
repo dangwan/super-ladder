@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/dangwan/super-ladder/request"
 	"net"
 )
 
@@ -16,12 +17,12 @@ func main() {
 	}
 	fmt.Println("Start listen " + fmt.Sprintf("%s:%s", *host, *port))
 	_ = listener
-	//for {
-	//	client, err := listener.Accept()
-	//	if err != nil {
-	//		panic(err)
-	//	}
-	//	go request.handleClientRequest(client)
-	//
-	//}
+	for {
+		client, err := listener.Accept()
+		if err != nil {
+			panic(err)
+		}
+		go request.HandleRequest(client)
+
+	}
 }

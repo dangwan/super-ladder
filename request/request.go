@@ -1,11 +1,22 @@
 package request
 
-func handleClientRequest(conn net.Conn) error {
+import (
+	"bytes"
+	"errors"
+	"fmt"
+	"io"
+	"net"
+	"net/url"
+	"strings"
+)
+
+// HandleRequest 处理客户端请求
+func HandleRequest(conn net.Conn) error {
 	if conn == nil {
-		return errors.Wrap(nil, "Client conn is nil")
+		return errors.New("client conn is nil")
 	}
 	defer conn.Close()
-	fmt.Println(conn.LocalAddr().String(), " is reqeusting")
+	fmt.Println(conn.LocalAddr().String(), " is requesting")
 	var b [1024]byte
 	n, err := conn.Read(b[:])
 	if err != nil {
